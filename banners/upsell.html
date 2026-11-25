@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:"Plus Jakarta Sans";src:url(jakarta.woff2) format("woff2");font-weight:200 800}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:630px;overflow:hidden;background:#121214}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:#fafafa;-webkit-font-smoothing:antialiased;position:relative}
+.num{font-variant-numeric:tabular-nums}
+.faixa{position:absolute;left:0;top:0;width:100%;height:10px;background:#f97316}
+.borda{position:absolute;inset:0;border:2px solid #27272a}
+.esq{position:absolute;left:64px;top:60px;width:540px;height:510px;display:flex;flex-direction:column}
+.marca{display:flex;align-items:center;gap:12px;font-weight:800;font-size:24px;letter-spacing:-.02em}
+.ico{display:grid;place-items:center;width:40px;height:40px;border-radius:10px;background:#f97316;color:#121214;font-size:21px;font-weight:800}
+.tipo{margin-top:40px;font-size:17px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fef3c7}
+h1{font-size:70px;line-height:1.02;font-weight:800;letter-spacing:-.045em;margin-top:12px}
+h1 em{font-style:normal;color:#f97316}
+.sub{font-size:21px;color:#a1a1aa;margin-top:18px;line-height:1.4;font-weight:500}
+.preco{margin-top:auto;display:flex;align-items:flex-end;gap:22px}
+.valor{display:flex;align-items:flex-start;gap:6px;line-height:1}
+.valor small{font-size:24px;font-weight:700;color:#fef3c7;margin-top:10px}
+.valor strong{font-size:84px;font-weight:800;letter-spacing:-.045em}
+.valor span{align-self:flex-end;color:#a1a1aa;font-weight:600;font-size:22px;margin-bottom:10px}
+.parc{font-size:18px;color:#f59e0b;font-weight:700;line-height:1.35;margin-bottom:10px}
+.parc span{display:block;color:#a1a1aa;font-weight:500}
+.dir{position:absolute;right:64px;top:60px;width:470px;height:510px;background:#18181b;border:1px solid #27272a;border-radius:28px;padding:30px;display:flex;flex-direction:column;gap:22px}
+.label{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fef3c7}
+.selo{position:absolute;top:-18px;right:28px;background:#f97316;color:#121214;font-weight:800;font-size:16px;letter-spacing:.04em;text-transform:uppercase;border-radius:99px;padding:8px 18px}
+.meses{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.mes{height:58px;border-radius:12px;background:#27272a;border:1px solid #3f3f46;display:flex;flex-direction:column;justify-content:center;align-items:center;font-size:15px;font-weight:700}
+.mes small{font-size:11px;color:#a1a1aa;font-weight:600}
+.mes.gratis{background:#f97316;border-color:#f97316;color:#121214}
+.mes.gratis small{color:#121214}
+.comp{display:flex;flex-direction:column;gap:12px;margin-top:auto}
+.linha{display:grid;grid-template-columns:110px 1fr 120px;align-items:center;gap:14px;font-size:16px;font-weight:600}
+.linha b{text-align:right}
+.barra{height:14px;border-radius:99px;background:#27272a;overflow:hidden}
+.barra i{display:block;height:100%;border-radius:99px}
+.eco{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #27272a;padding-top:16px;font-weight:700;font-size:18px}
+.eco strong{color:#f97316;font-size:26px;letter-spacing:-.02em}
+</style>
+</head>
+<body>
+<div class="faixa"></div>
+<div class="esq">
+  <div class="marca"><span class="ico">F</span>Finance Balance</div>
+  <p class="tipo">Oferta do plano anual</p>
+  <h1>Pague 10 meses,<br><em>use 12.</em></h1>
+  <p class="sub">Acesso completo na web e no Android por um ano inteiro, com 2 meses grátis.</p>
+  <div class="preco">
+    <div class="valor"><small>R$</small><strong class="num">299</strong><span>/ano</span></div>
+    <p class="parc num">ou 12x de R$ 30,92<span>equivale a R$ 24,92/mês</span></p>
+  </div>
+</div>
+
+<div class="dir">
+  <span class="selo">2 meses grátis</span>
+  <div>
+    <p class="label">Seu ano no Finance Balance</p>
+    <div class="meses">
+      <div class="mes">jan</div><div class="mes">fev</div><div class="mes">mar</div><div class="mes">abr</div>
+      <div class="mes">mai</div><div class="mes">jun</div><div class="mes">jul</div><div class="mes">ago</div>
+      <div class="mes">set</div><div class="mes">out</div>
+      <div class="mes gratis">nov<small>grátis</small></div><div class="mes gratis">dez<small>grátis</small></div>
+    </div>
+  </div>
+  <div class="comp num">
+    <p class="label">Custo em 12 meses</p>
+    <div class="linha"><span>Mensal</span><div class="barra"><i style="width:100%;background:#71717a"></i></div><b>R$ 358,80</b></div>
+    <div class="linha"><span>Anual</span><div class="barra"><i style="width:83.3%;background:#f97316"></i></div><b>R$ 299,00</b></div>
+    <div class="eco"><span>Você economiza</span><strong>R$ 59,80</strong></div>
+  </div>
+</div>
+<div class="borda"></div>
+</body>
+</html>
