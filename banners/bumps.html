@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:"Plus Jakarta Sans";src:url(jakarta.woff2) format("woff2");font-weight:200 800}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:600px;height:600px;overflow:hidden;background:#121214}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:#fafafa;-webkit-font-smoothing:antialiased;position:relative}
+.num{font-variant-numeric:tabular-nums}
+.borda{position:absolute;inset:0;border:2px solid #27272a}
+.faixa{position:absolute;left:0;top:0;width:100%;height:8px;background:#f97316}
+.topo{position:absolute;left:44px;top:44px;right:44px;display:flex;justify-content:space-between;align-items:center}
+.marca{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.02em}
+.ico{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:#f97316;color:#121214;font-size:18px;font-weight:800}
+.tag{border:1.5px solid #f59e0b;color:#f59e0b;border-radius:99px;padding:5px 14px;font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.txt{position:absolute;left:44px;top:118px;right:44px}
+.tipo{font-size:15px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fef3c7}
+h1{font-size:46px;line-height:1.04;font-weight:800;letter-spacing:-.04em;margin-top:10px}
+h1 em{font-style:normal;color:#f97316}
+.sub{font-size:18px;color:#a1a1aa;margin-top:12px;line-height:1.4;font-weight:500;max-width:480px}
+.vis{position:absolute;left:44px;right:44px;bottom:44px;height:218px;background:#18181b;border:1px solid #27272a;border-radius:24px;padding:22px 24px;overflow:hidden}
+.label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fef3c7}
+.amber{color:#f59e0b}.orange{color:#f97316}.muted{color:#a1a1aa}
+.prog{height:9px;background:#27272a;border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;border-radius:99px;background:#f97316}
+/* kit */
+.kit{display:grid;grid-template-columns:1fr 1fr;gap:22px;height:100%}
+.passos{list-style:none;display:flex;flex-direction:column;gap:12px;margin-top:12px;font-size:16px;font-weight:600}
+.passos li{display:flex;align-items:center;gap:10px}
+.passos li span{width:22px;height:22px;border-radius:7px;flex:none;display:grid;place-items:center;font-size:13px;font-weight:800}
+.ok{background:#f97316;color:#121214}
+.pend{border:1.5px solid #3f3f46}
+.planilha{border:1px solid #3f3f46;border-radius:12px;overflow:hidden;font-size:12.5px;margin-top:12px}
+.planilha div{display:grid;grid-template-columns:1.3fr 1fr;border-top:1px solid #27272a}
+.planilha div:first-child{border-top:0;background:#27272a;font-weight:700;color:#fef3c7}
+.planilha span{padding:6px 9px}
+.planilha span+span{border-left:1px solid #27272a;text-align:right}
+/* dívidas */
+.div-row{display:grid;grid-template-columns:150px 1fr 86px;align-items:center;gap:14px;font-size:15px;font-weight:600;margin-top:13px}
+.div-row b{text-align:right}
+/* perfis */
+.perfis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;height:150px}
+.perfil{background:#27272a;border:1px solid #3f3f46;border-radius:14px;padding:12px 10px;display:flex;flex-direction:column;gap:8px}
+.perfil b{font-size:14px}
+.stack{display:flex;height:12px;border-radius:99px;overflow:hidden;margin-top:auto}
+.perfil small{font-size:11.5px;color:#a1a1aa;line-height:1.3}
+/* invest */
+.inv{display:grid;grid-template-columns:1fr 170px;gap:20px;height:100%}
+.chips{display:flex;flex-direction:column;gap:9px;justify-content:center}
+.chip{background:#27272a;border:1px solid #3f3f46;border-radius:12px;padding:9px 12px;font-size:14px;font-weight:700;display:flex;justify-content:space-between}
+.chip small{color:#a1a1aa;font-weight:600}
+.b{display:none}
+</style>
+</head>
+<body>
+<div class="faixa"></div>
+
+<!-- 1. Kit -->
+<div class="b" id="kit">
+  <div class="topo"><span class="marca"><span class="ico">F</span>Finance Balance</span><span class="tag">Recomendado</span></div>
+  <div class="txt">
+    <p class="tipo">Guia + planilha modelo</p>
+    <h1>Kit Primeiro Mês <em>Organizado</em></h1>
+    <p class="sub">Configure o app em uma tarde e traga os dados da sua planilha antiga.</p>
+  </div>
+  <div class="vis"><div class="kit">
+    <div><p class="label">Passo a passo</p>
+      <ul class="passos">
+        <li><span class="ok">✓</span>Cadastrar contas</li>
+        <li><span class="ok">✓</span>Ajustar categorias</li>
+        <li><span class="ok">✓</span>Lançar o mês</li>
+        <li><span class="pend"></span><span style="all:unset" class="muted">Criar orçamento</span></li>
+      </ul>
+    </div>
+    <div><p class="label">Planilha de migração</p>
+      <div class="planilha num">
+        <div><span>Descrição</span><span>Valor</span></div>
+        <div><span>Aluguel</span><span class="orange">−1.200,00</span></div>
+        <div><span>Salário</span><span class="amber">+4.250,00</span></div>
+        <div><span>Mercado</span><span class="orange">−412,35</span></div>
+        <div><span>Internet</span><span class="orange">−99,90</span></div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 2. Dívidas -->
+<div class="b" id="dividas">
+  <div class="topo"><span class="marca"><span class="ico">F</span>Finance Balance</span><span class="tag">Guia prático</span></div>
+  <div class="txt">
+    <p class="tipo">Bola de neve · avalanche</p>
+    <h1>Plano de Quitação de <em>Dívidas</em></h1>
+    <p class="sub">Um método para sair do vermelho e acompanhar cada dívida no app.</p>
+  </div>
+  <div class="vis">
+    <p class="label">Ordem de quitação</p>
+    <div class="div-row num"><span>1. Cartão de loja</span><div class="prog"><i style="width:100%"></i></div><b class="amber">Quitada</b></div>
+    <div class="div-row num"><span>2. Cheque especial</span><div class="prog"><i style="width:72%"></i></div><b>72%</b></div>
+    <div class="div-row num"><span>3. Cartão de crédito</span><div class="prog"><i style="width:35%"></i></div><b>35%</b></div>
+    <div class="div-row num"><span>4. Empréstimo</span><div class="prog"><i style="width:10%"></i></div><b>10%</b></div>
+  </div>
+</div>
+
+<!-- 3. Orçamentos -->
+<div class="b" id="orcamentos">
+  <div class="topo"><span class="marca"><span class="ico">F</span>Finance Balance</span><span class="tag">Pronto para usar</span></div>
+  <div class="txt">
+    <p class="tipo">4 modelos de orçamento</p>
+    <h1>Orçamentos Prontos <em>por Perfil</em></h1>
+    <p class="sub">Limites por categoria e distribuição da renda já calculados para você.</p>
+  </div>
+  <div class="vis">
+    <p class="label">Escolha o seu perfil</p>
+    <div class="perfis">
+      <div class="perfil"><b>Estudante</b><small>Bolsa, estágio e contas da faculdade</small><div class="stack"><i style="width:60%;background:#f97316"></i><i style="width:25%;background:#f59e0b"></i><i style="width:15%;background:#fef3c7"></i></div></div>
+      <div class="perfil"><b>CLT</b><small>Salário fixo e regra 50/30/20</small><div class="stack"><i style="width:50%;background:#f97316"></i><i style="width:30%;background:#f59e0b"></i><i style="width:20%;background:#fef3c7"></i></div></div>
+      <div class="perfil"><b>Autônomo</b><small>Renda variável, impostos e reserva</small><div class="stack"><i style="width:45%;background:#f97316"></i><i style="width:20%;background:#f59e0b"></i><i style="width:35%;background:#fef3c7"></i></div></div>
+      <div class="perfil"><b>Casal</b><small>Contas da casa e metas a dois</small><div class="stack"><i style="width:55%;background:#f97316"></i><i style="width:20%;background:#f59e0b"></i><i style="width:25%;background:#fef3c7"></i></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Investimentos -->
+<div class="b" id="investimentos">
+  <div class="topo"><span class="marca"><span class="ico">F</span>Finance Balance</span><span class="tag">Mini-curso</span></div>
+  <div class="txt">
+    <p class="tipo">Conteúdo educativo</p>
+    <h1>Primeiros <em>Investimentos</em></h1>
+    <p class="sub">Reserva de emergência, Tesouro Direto e CDB explicados sem complicação.</p>
+  </div>
+  <div class="vis"><div class="inv">
+    <div style="display:flex;flex-direction:column">
+      <p class="label">Seu patrimônio crescendo</p>
+      <svg viewBox="0 0 300 140" style="flex:1;margin-top:10px" preserveAspectRatio="none">
+        <line x1="0" y1="139" x2="300" y2="139" stroke="#27272a" stroke-width="2"/>
+        <line x1="0" y1="93" x2="300" y2="93" stroke="#27272a" stroke-width="1"/>
+        <line x1="0" y1="47" x2="300" y2="47" stroke="#27272a" stroke-width="1"/>
+        <polyline points="0,128 40,122 80,116 120,104 160,95 200,78 240,62 300,30" fill="none" stroke="#f97316" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+        <polyline points="0,130 60,126 120,121 180,115 240,109 300,102" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="6 6" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="chips">
+      <div class="chip">Reserva <small>módulo 1</small></div>
+      <div class="chip">Tesouro <small>módulo 2</small></div>
+      <div class="chip">CDB <small>módulo 3</small></div>
+    </div>
+  </div></div>
+</div>
+
+<div class="borda"></div>
+<script>
+  const id = location.hash.slice(1) || 'kit';
+  document.getElementById(id).style.display = 'block';
+</script>
+</body>
+</html>
