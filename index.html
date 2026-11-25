@@ -195,6 +195,20 @@ section.bloco{padding:5.5rem 0}
 .passo p{color:var(--muted)}
 @media (max-width:800px){.passos{grid-template-columns:1fr}}
 
+
+/* Depoimentos */
+.depos{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.depo{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);padding:1.75rem;display:flex;flex-direction:column;gap:1.25rem}
+.depo-estrelas{color:var(--amber);letter-spacing:.15em;font-size:.95rem}
+.depo blockquote{font-size:1.02rem;line-height:1.6;flex:1}
+.depo blockquote strong{color:var(--primary);font-weight:700}
+.depo figcaption{display:flex;align-items:center;gap:.8rem;border-top:1px solid var(--line);padding-top:1.1rem}
+.depo-av{width:42px;height:42px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line-strong);display:grid;place-items:center;font-weight:800;color:var(--cream);font-size:.9rem;flex:none}
+.depo figcaption b{display:block;font-size:.95rem}
+.depo figcaption small{color:var(--muted);font-size:.85rem}
+.depo-nota{margin-top:1.5rem;text-align:center;color:var(--subtle);font-size:.85rem}
+@media (max-width:900px){.depos{grid-template-columns:1fr}}
+
 /* Preço */
 .preco-box{display:grid;grid-template-columns:1.1fr 1fr;gap:0;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow)}
 .preco-esq{padding:2.75rem}
@@ -261,6 +275,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
     <nav aria-label="Seções">
       <a href="#versoes">Web e celular</a>
       <a href="#recursos">Recursos</a>
+      <a href="#depoimentos">Depoimentos</a>
       <a href="#preco">Preço</a>
       <a href="#faq">Dúvidas</a>
     </nav>
@@ -521,6 +536,50 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   </div>
 </section>
 
+<!-- DEPOIMENTOS -->
+<section class="bloco borda-topo" id="depoimentos">
+  <div class="wrap">
+    <div class="bloco-head">
+      <span class="label">Quem usa</span>
+      <h2>Menos planilha, mais controle.</h2>
+      <p>Pessoas com rotinas diferentes, o mesmo resultado: saber para onde vai o dinheiro.</p>
+    </div>
+    <div class="depos">
+      <figure class="depo">
+        <span class="depo-estrelas" aria-label="5 de 5 estrelas">★★★★★</span>
+        <blockquote>“Eu achava que meu problema era ganhar pouco. Era não saber para onde ia. Com o <strong>gráfico por categoria</strong> descobri que delivery levava quase um quarto da minha bolsa.”</blockquote>
+        <figcaption><span class="depo-av" aria-hidden="true">MS</span><span><b>Mariana S.</b><small>Estudante universitária</small></span></figcaption>
+      </figure>
+      <figure class="depo">
+        <span class="depo-estrelas" aria-label="5 de 5 estrelas">★★★★★</span>
+        <blockquote>“Como freelancer, minha renda muda todo mês. A <strong>distribuição por percentual</strong> recalcula tudo sozinha, e eu sei quanto separar para impostos e reserva sem abrir planilha.”</blockquote>
+        <figcaption><span class="depo-av" aria-hidden="true">RA</span><span><b>Rafael A.</b><small>Designer autônomo</small></span></figcaption>
+      </figure>
+      <figure class="depo">
+        <span class="depo-estrelas" aria-label="5 de 5 estrelas">★★★★★</span>
+        <blockquote>“A gente lança os gastos pelo celular na hora e revisa juntos no notebook no domingo. Os <strong>orçamentos com alerta</strong> acabaram com a briga sobre o cartão.”</blockquote>
+        <figcaption><span class="depo-av" aria-hidden="true">JC</span><span><b>Juliana e Carlos</b><small>Casal, planejando o casamento</small></span></figcaption>
+      </figure>
+      <figure class="depo">
+        <span class="depo-estrelas" aria-label="5 de 5 estrelas">★★★★★</span>
+        <blockquote>“Larguei a planilha depois de três anos. Em uma tarde cadastrei as contas e o mês, e o <strong>dashboard</strong> já mostrou o que eu levava horas para montar.”</blockquote>
+        <figcaption><span class="depo-av" aria-hidden="true">PL</span><span><b>Patrícia L.</b><small>Professora</small></span></figcaption>
+      </figure>
+      <figure class="depo">
+        <span class="depo-estrelas" aria-label="5 de 5 estrelas">★★★★★</span>
+        <blockquote>“O que me ganhou foi separar <strong>pago de pendente</strong>. O saldo mostra o que eu tenho de verdade, não o que eu ainda vou receber.”</blockquote>
+        <figcaption><span class="depo-av" aria-hidden="true">TB</span><span><b>Thiago B.</b><small>Analista de sistemas</small></span></figcaption>
+      </figure>
+      <figure class="depo">
+        <span class="depo-estrelas" aria-label="5 de 5 estrelas">★★★★★</span>
+        <blockquote>“Usei a regra 50/30/20 desde o primeiro salário. Em seis meses montei minha <strong>reserva de emergência</strong> acompanhando a meta no app.”</blockquote>
+        <figcaption><span class="depo-av" aria-hidden="true">AN</span><span><b>Ana N.</b><small>Recém-formada, primeiro emprego</small></span></figcaption>
+      </figure>
+    </div>
+    <p class="depo-nota">Depoimentos ilustrativos, criados para este projeto acadêmico.</p>
+  </div>
+</section>
+
 <!-- PREÇO -->
 <section class="bloco borda-topo" id="preco">
   <div class="wrap">
@@ -613,7 +672,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 <footer>
   <div class="wrap">
     <span class="marca" style="color:var(--fg)"><span class="marca-ico" aria-hidden="true">F</span>Finance Balance</span>
-    <span>© 2026 Finance Balance. Todos os direitos reservados.</span>
+    <span>© 2026 Finance Balance · Projeto acadêmico</span>
   </div>
 </footer>
 
