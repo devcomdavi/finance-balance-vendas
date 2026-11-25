@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:"Plus Jakarta Sans";src:url(../banners/jakarta.woff2) format("woff2");font-weight:200 800}
+*{box-sizing:border-box;margin:0;padding:0}
+/* Desenhado em 540px de largura; renderizado a 2x = 1080px */
+html,body{width:540px;overflow:hidden;background:#121214}
+body.feed{height:675px}
+body.story{height:960px}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:#fafafa;-webkit-font-smoothing:antialiased}
+.num{font-variant-numeric:tabular-nums}
+.c{display:none;flex-direction:column;height:100%;padding:34px 34px 30px}
+.story .c{padding:120px 34px 150px}  /* zonas seguras de stories/reels */
+.marca{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;letter-spacing:-.02em}
+.ico{display:grid;place-items:center;width:26px;height:26px;border-radius:7px;background:#f97316;color:#121214;font-size:14px;font-weight:800}
+h1{font-size:40px;line-height:1.04;font-weight:800;letter-spacing:-.045em;margin-top:20px}
+.story h1{font-size:46px}
+h1 em{font-style:normal;color:#f97316}
+.sub{font-size:16px;color:#a1a1aa;margin-top:10px;line-height:1.4;font-weight:500}
+.story .sub{font-size:18px}
+.vis{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;margin:18px 0}
+.cta{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#18181b;border:1px solid #27272a;border-radius:16px;padding:12px 12px 12px 18px}
+.cta p{font-size:14px;color:#a1a1aa;font-weight:600;line-height:1.3}
+.cta p b{display:block;color:#fafafa;font-size:18px;font-weight:800}
+.btn{background:#f97316;color:#121214;font-weight:800;font-size:15px;border-radius:11px;padding:12px 18px;white-space:nowrap}
+.card{background:#18181b;border:1px solid #27272a;border-radius:16px;padding:14px 16px}
+.label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fef3c7}
+.amber{color:#f59e0b}.orange{color:#f97316}.muted{color:#a1a1aa}
+.prog{height:8px;background:#27272a;border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;border-radius:99px;background:#f97316}
+
+/* 1 — planilha x app */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+.vs .lado{display:flex;flex-direction:column;gap:8px}
+.vs .tit{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.sheet{background:#e8e8e8;border-radius:8px;overflow:hidden;font-size:9.5px;color:#333;font-family:Arial,sans-serif;transform:rotate(-1.5deg)}
+.sheet div{display:grid;grid-template-columns:18px 1.4fr 1fr 1fr;border-top:1px solid #c8c8c8}
+.sheet span{padding:4px 5px;border-left:1px solid #c8c8c8;white-space:nowrap;overflow:hidden}
+.sheet div:first-child{background:#d0d0d0;font-weight:700}
+.sheet .err{color:#c00;font-weight:700}
+.dash{display:flex;flex-direction:column;gap:8px}
+.dash .card{padding:10px 12px;border-radius:12px}
+.dash .v{font-size:19px;font-weight:800;letter-spacing:-.02em}
+.donut-row{display:flex;align-items:center;gap:10px}
+.leg{list-style:none;font-size:10px;display:flex;flex-direction:column;gap:3px;color:#a1a1aa}
+.leg i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:4px}
+
+/* 2 — celular */
+.phone{width:230px;background:#0a0a0b;border:1px solid #3f3f46;border-radius:34px;padding:9px;box-shadow:0 20px 25px -5px rgb(0 0 0/.6)}
+.story .phone{width:270px}
+.tela{background:#121214;border-radius:26px;padding:22px 12px 14px;display:flex;flex-direction:column;gap:8px}
+.tela .card{border-radius:12px;padding:10px 11px}
+.tela .saldo{font-size:21px;font-weight:800;letter-spacing:-.02em}
+.dois{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.dois .v{font-size:13px;font-weight:800}
+.lista{list-style:none;display:flex;flex-direction:column;gap:7px;font-size:11px}
+.lista li{display:flex;justify-content:space-between}
+.lista small{display:block;color:#a1a1aa;font-size:9.5px}
+.wrap-phone{position:relative}
+.balao{position:absolute;background:#f97316;color:#121214;font-weight:800;font-size:13px;border-radius:12px;padding:8px 12px;white-space:nowrap;box-shadow:0 10px 20px rgb(0 0 0/.5)}
+
+/* 3 — menos de 1 real */
+.grande{text-align:center}
+.grande .r{font-size:150px;font-weight:800;letter-spacing:-.06em;line-height:.9;color:#f97316}
+.story .grande .r{font-size:180px}
+.grande .r small{font-size:44px;color:#fef3c7;letter-spacing:-.02em;vertical-align:top;margin-right:6px;position:relative;top:22px}
+.grande p{font-size:20px;font-weight:700;margin-top:10px}
+.compara{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.compara span{background:#18181b;border:1px solid #27272a;border-radius:99px;padding:7px 14px;font-size:13px;font-weight:600;color:#a1a1aa}
+.compara b{color:#fafafa}
+
+/* 4 — distribuição */
+.dist{width:100%;display:flex;flex-direction:column;gap:12px}
+.renda{display:flex;justify-content:space-between;align-items:baseline}
+.renda strong{font-size:30px;font-weight:800;letter-spacing:-.03em}
+.fatia{display:grid;grid-template-columns:62px 1fr auto;gap:14px;align-items:center;background:#18181b;border:1px solid #27272a;border-radius:16px;padding:14px 16px}
+.fatia .pct{font-size:26px;font-weight:800;letter-spacing:-.03em}
+.fatia b{display:block;font-size:16px}
+.fatia small{color:#a1a1aa;font-size:12px}
+.fatia .val{font-size:20px;font-weight:800}
+
+/* 5 — alerta de orçamento */
+.notifs{width:100%;display:flex;flex-direction:column;gap:12px}
+.notif{display:grid;grid-template-columns:38px 1fr;gap:12px;background:#18181b;border:1px solid #3f3f46;border-radius:18px;padding:14px;box-shadow:0 14px 20px -6px rgb(0 0 0/.6)}
+.notif .ico{width:38px;height:38px;border-radius:10px;font-size:19px}
+.notif .top{display:flex;justify-content:space-between;font-size:11px;color:#a1a1aa;font-weight:600}
+.notif b{display:block;font-size:15px;margin-top:2px}
+.notif p{font-size:13px;color:#a1a1aa;margin-top:2px}
+.notif .prog{margin-top:9px}
+.notif.ok{opacity:.75;transform:scale(.96)}
+</style>
+</head>
+<body>
+
+<!-- 1. Planilha x App -->
+<section class="c" id="planilha">
+  <div class="marca"><span class="ico">F</span>Finance Balance</div>
+  <h1>Sua planilha não avisa quando o <em>dinheiro acaba.</em></h1>
+  <p class="sub">O Finance Balance avisa. E mostra para onde ele foi.</p>
+  <div class="vis"><div class="vs">
+    <div class="lado"><span class="tit muted">Planilha</span>
+      <div class="sheet">
+        <div><span></span><span>A</span><span>B</span><span>C</span></div>
+        <div><span>1</span><span>Aluguel</span><span>1200</span><span></span></div>
+        <div><span>2</span><span>Mercado</span><span>412,35</span><span></span></div>
+        <div><span>3</span><span>ifood??</span><span></span><span></span></div>
+        <div><span>4</span><span>Uber</span><span>87</span><span></span></div>
+        <div><span>5</span><span>cartão</span><span class="err">#REF!</span><span></span></div>
+        <div><span>6</span><span>TOTAL</span><span class="err">#VALOR!</span><span></span></div>
+        <div><span>7</span><span>atualizar</span><span>depois</span><span></span></div>
+      </div>
+    </div>
+    <div class="lado"><span class="tit orange">Finance Balance</span>
+      <div class="dash">
+        <div class="card"><p class="label">Saldo total</p><p class="v num">R$ 8.432,90</p></div>
+        <div class="card"><div class="donut-row">
+          <svg width="54" height="54" viewBox="0 0 42 42"><circle cx="21" cy="21" r="15.9" fill="none" stroke="#f97316" stroke-width="7" stroke-dasharray="38 62" stroke-dashoffset="25"/><circle cx="21" cy="21" r="15.9" fill="none" stroke="#f59e0b" stroke-width="7" stroke-dasharray="24 76" stroke-dashoffset="-13"/><circle cx="21" cy="21" r="15.9" fill="none" stroke="#fef3c7" stroke-width="7" stroke-dasharray="14 86" stroke-dashoffset="-37"/><circle cx="21" cy="21" r="15.9" fill="none" stroke="#71717a" stroke-width="7" stroke-dasharray="24 76" stroke-dashoffset="-51"/></svg>
+          <ul class="leg"><li><i style="background:#f97316"></i>Moradia</li><li><i style="background:#f59e0b"></i>Mercado</li><li><i style="background:#fef3c7"></i>Transporte</li></ul>
+        </div></div>
+        <div class="card"><p class="label">Orçamento do mês</p><p class="v num" style="font-size:15px">68%</p><div class="prog" style="margin-top:5px"><i style="width:68%"></i></div></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="cta"><p><b class="num">R$ 29,90/mês</b>Web + Android</p><span class="btn">Assinar agora</span></div>
+</section>
+
+<!-- 2. Onde foi parar o salário (celular) -->
+<section class="c" id="salario">
+  <div class="marca"><span class="ico">F</span>Finance Balance</div>
+  <h1>Onde foi parar o <em>salário?</em></h1>
+  <p class="sub">Lance pelo celular em segundos e veja o mês inteiro numa tela.</p>
+  <div class="vis"><div class="wrap-phone">
+    <div class="phone"><div class="tela">
+      <div class="card"><p class="label">Saldo total</p><p class="saldo num">R$ 8.432,90</p></div>
+      <div class="dois">
+        <div class="card"><p class="label">Receitas</p><p class="v num amber">R$ 4.850</p></div>
+        <div class="card"><p class="label">Despesas</p><p class="v num orange">R$ 3.127</p></div>
+      </div>
+      <div class="card"><ul class="lista num">
+        <li><span>Aluguel<small>Moradia</small></span><b class="orange">−1.200,00</b></li>
+        <li><span>Mercado<small>Alimentação</small></span><b class="orange">−412,35</b></li>
+        <li><span>Delivery<small>Alimentação</small></span><b class="orange">−286,40</b></li>
+      </ul></div>
+    </div></div>
+    <span class="balao" style="left:-60px;bottom:-24px">Delivery: 9% do mês</span>
+    <span class="balao" style="right:-70px;top:30px;background:#f59e0b">+ R$ 1.722 no mês</span>
+  </div></div>
+  <div class="cta"><p><b class="num">R$ 29,90/mês</b>Sem fidelidade</p><span class="btn">Quero organizar</span></div>
+</section>
+
+<!-- 3. Menos de R$ 1 por dia -->
+<section class="c" id="preco">
+  <div class="marca"><span class="ico">F</span>Finance Balance</div>
+  <h1>Controle financeiro completo por <em>menos que um cafezinho.</em></h1>
+  <div class="vis"><div class="grande">
+    <div class="r num"><small>R$</small>0,98</div>
+    <p>por dia. Na web e no Android.</p>
+    <p style="font-size:12px;color:#71717a;font-weight:500;margin-top:4px">Média diária do plano mensal em 12 meses (R$ 358,80 ÷ 365).</p>
+    <div class="compara">
+      <span>Dashboard</span><span>Orçamentos</span><span>Metas</span><span>Investimentos</span><span>Exportação CSV</span>
+    </div>
+  </div></div>
+  <div class="cta"><p><b class="num">R$ 29,90/mês</b>ou R$ 299/ano</p><span class="btn">Assinar agora</span></div>
+</section>
+
+<!-- 4. Distribuição da renda -->
+<section class="c" id="distribuicao">
+  <div class="marca"><span class="ico">F</span>Finance Balance</div>
+  <h1>Seu salário <em>dividido sozinho.</em></h1>
+  <p class="sub">Defina os percentuais uma vez. O app calcula o resto todo mês.</p>
+  <div class="vis"><div class="dist num">
+    <div class="renda"><span class="label">Renda do mês</span><strong>R$ 4.850,00</strong></div>
+    <div class="fatia"><span class="pct orange">50%</span><span><b>Essenciais</b><small>Moradia, mercado, contas</small></span><span class="val">R$ 2.425</span></div>
+    <div class="fatia"><span class="pct amber">30%</span><span><b>Estilo de vida</b><small>Lazer, delivery, compras</small></span><span class="val">R$ 1.455</span></div>
+    <div class="fatia"><span class="pct" style="color:#fef3c7">20%</span><span><b>Investimentos</b><small>Reserva e metas</small></span><span class="val">R$ 970</span></div>
+  </div></div>
+  <div class="cta"><p><b class="num">R$ 29,90/mês</b>Web + Android</p><span class="btn">Começar agora</span></div>
+</section>
+
+<!-- 5. Alerta de orçamento -->
+<section class="c" id="alerta">
+  <div class="marca"><span class="ico">F</span>Finance Balance</div>
+  <h1>Saiba <em>antes</em> de estourar o orçamento.</h1>
+  <p class="sub">Limite por categoria e barra de consumo atualizada a cada lançamento.</p>
+  <div class="vis"><div class="notifs num">
+    <div class="notif"><span class="ico">F</span><div><div class="top"><span>Orçamentos</span><span>agora</span></div><b>Transporte: 88% usado</b><p>Restam R$ 62,00 até o fim do mês.</p><div class="prog"><i style="width:88%;background:#ea580c"></i></div></div></div>
+    <div class="notif"><span class="ico">F</span><div><div class="top"><span>Orçamentos</span><span>ontem</span></div><b>Alimentação: 83% usado</b><p>Restam R$ 150,00 até o fim do mês.</p><div class="prog"><i style="width:83%"></i></div></div></div>
+    <div class="notif ok"><span class="ico">F</span><div><div class="top"><span>Metas</span><span>seg</span></div><b>Reserva de emergência: 63%</b><p>Faltam R$ 3.700 para a meta.</p><div class="prog"><i style="width:63%;background:#f59e0b"></i></div></div></div>
+  </div></div>
+  <div class="cta"><p><b class="num">R$ 29,90/mês</b>Cancele quando quiser</p><span class="btn">Assinar agora</span></div>
+</section>
+
+<script>
+  const [id, fmt] = location.hash.slice(1).split('-');
+  document.body.className = fmt || 'feed';
+  document.getElementById(id || 'planilha').style.display = 'flex';
+</script>
+</body>
+</html>
