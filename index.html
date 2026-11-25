@@ -684,10 +684,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 <script>
   // Cole aqui o link de checkout da assinatura (Stripe, Kiwify, Hotmart, Mercado Pago...).
   // Enquanto estiver vazio, os botões levam até a seção de preço.
-  const CHECKOUT_URL = '';
+  const CHECKOUT_URL = 'checkout.html';
 
   document.querySelectorAll('.js-checkout').forEach((a) => {
-    if (CHECKOUT_URL) { a.href = CHECKOUT_URL; a.rel = 'noopener'; }
+    if (CHECKOUT_URL) a.href = CHECKOUT_URL;
     else if (a.hasAttribute('data-final')) a.href = '#preco';
   });
 
