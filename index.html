@@ -225,6 +225,16 @@ section.bloco{padding:5.5rem 0}
 .dia{display:inline-block;margin-top:.25rem;color:var(--amber);font-weight:700;font-size:.92rem}
 @media (max-width:860px){.preco-box{grid-template-columns:1fr}.preco-dir{border-left:0;border-top:1px solid var(--line-strong)}.preco-esq,.preco-dir{padding:1.75rem}}
 
+.plano{display:flex;flex-direction:column;gap:.55rem;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-lg);padding:1.25rem}
+.plano-destaque{border:1.5px solid var(--primary)}
+.plano-topo{display:flex;justify-content:space-between;align-items:center}
+.plano-topo b{font-size:1.05rem}
+.selo{background:var(--primary);color:var(--on-primary);font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border-radius:999px;padding:.2rem .65rem}
+.plano .valor strong{font-size:clamp(2.6rem,5vw,3.25rem)}
+.plano .valor small{font-size:1.05rem;margin-top:.35rem}
+.plano .valor span{margin-bottom:.35rem}
+.plano .btn{margin-top:.35rem;white-space:normal;text-align:center}
+.plano-nota{font-size:.8rem;color:var(--muted)}
 /* Comparativo */
 .comp{width:100%;border-collapse:collapse;font-size:.97rem}
 .comp th,.comp td{padding:1rem 1.1rem;text-align:left;border-bottom:1px solid var(--line)}
@@ -585,12 +595,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   <div class="wrap">
     <div class="bloco-head centro">
       <span class="label">Assinatura</span>
-      <h2>Um plano. Tudo incluso.</h2>
-      <p>Sem plano básico cheio de bloqueio. Você assina e usa tudo, na web e no celular.</p>
+      <h2>Tudo incluso. Você escolhe como pagar.</h2>
+      <p>Sem plano básico cheio de bloqueio. Mensal ou anual, você usa tudo, na web e no celular.</p>
     </div>
     <div class="preco-box">
       <div class="preco-esq">
-        <span class="pill"><i></i> Plano mensal</span>
+        <span class="pill"><i></i> Acesso completo</span>
         <h3>Finance Balance Completo</h3>
         <p>Acesso a todos os recursos nas duas versões.</p>
         <ul class="check">
@@ -604,14 +614,20 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
         </ul>
       </div>
       <div class="preco-dir">
-        <div class="valor"><small>R$</small><strong class="num">29,90</strong><span>/mês</span></div>
-        <span class="dia">Menos de R$ 1 por dia.</span>
-        <a href="#" class="btn btn-primary js-checkout" data-final>Quero assinar agora</a>
-        <ul class="garantias">
-          <li>Cobrança mensal recorrente</li>
-          <li>Sem fidelidade: cancele quando quiser</li>
-          <li>Pagamento seguro</li>
-        </ul>
+        <div class="plano">
+          <div class="plano-topo"><b>Mensal</b></div>
+          <div class="valor"><small>R$</small><strong class="num">29,90</strong><span>/mês</span></div>
+          <span class="dia">Menos de R$ 1 por dia.</span>
+          <a href="#" class="btn btn-secondary js-checkout" data-final>Assinar mensal</a>
+          <p class="plano-nota">Cobrança mensal · cancele quando quiser</p>
+        </div>
+        <div class="plano plano-destaque">
+          <div class="plano-topo"><b>Anual</b><span class="selo">2 meses grátis</span></div>
+          <div class="valor"><small>R$</small><strong class="num">299</strong><span>/ano</span></div>
+          <span class="dia">Equivale a R$ 24,92/mês · ou 12x de R$ 30,92</span>
+          <a href="https://pay.kiwify.com.br/3eK9SDP" class="btn btn-primary">Assinar anual e economizar R$ 59,80</a>
+          <p class="plano-nota">Um pagamento por ano · pagamento seguro</p>
+        </div>
       </div>
     </div>
   </div>
@@ -646,6 +662,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
     <div class="bloco-head centro"><span class="label">Dúvidas</span><h2>Perguntas frequentes</h2></div>
     <div class="faq">
       <details><summary>Como funciona a cobrança?</summary><p>É uma assinatura mensal de R$ 29,90, cobrada automaticamente todo mês na mesma data. Você mantém o acesso enquanto a assinatura estiver ativa.</p></details>
+      <details><summary>Tem plano anual?</summary><p>Tem. O plano anual custa R$ 299,00 (ou 12x de R$ 30,92) e sai por R$ 24,92 por mês, o equivalente a 2 meses grátis em relação ao mensal.</p></details>
       <details><summary>Posso cancelar quando quiser?</summary><p>Sim. Não tem fidelidade nem multa. Ao cancelar, você usa até o fim do período já pago e não é cobrado de novo.</p></details>
       <details><summary>Preciso conectar minha conta do banco?</summary><p>Não. O Finance Balance funciona com os lançamentos que você faz, sem pedir senha de banco. Você decide o que entra no sistema.</p></details>
       <details><summary>Funciona no iPhone?</summary><p>No iPhone, use a versão web pelo navegador (Safari ou Chrome), que se adapta à tela. O app nativo está disponível para Android.</p></details>
@@ -661,7 +678,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
     <div class="final">
       <div>
         <h2>Comece o próximo mês sabendo exatamente para onde vai o seu dinheiro.</h2>
-        <p>R$ 29,90/mês · web + Android · cancele quando quiser</p>
+        <p>R$ 29,90/mês ou R$ 299/ano · web + Android</p>
       </div>
       <a href="#preco" class="btn js-checkout">Assinar o Finance Balance</a>
     </div>
