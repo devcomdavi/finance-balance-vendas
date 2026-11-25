@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+
+<style>
+@font-face{font-family:"Plus Jakarta Sans";src:url(jakarta.woff2) format("woff2");font-weight:200 800}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:300px;height:250px;overflow:hidden;background:#121214}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:#fafafa;-webkit-font-smoothing:antialiased;position:relative}
+.num{font-variant-numeric:tabular-nums}
+.borda{position:absolute;inset:0;border:1px solid #27272a;pointer-events:none}
+.txt{position:absolute;left:16px;top:16px;width:150px;display:flex;flex-direction:column;height:218px}
+.marca{display:flex;align-items:center;gap:6px;font-weight:800;font-size:12px;letter-spacing:-.02em}
+.ico{display:grid;place-items:center;width:20px;height:20px;border-radius:5px;background:#f97316;color:#121214;font-size:11px;font-weight:800}
+h1{font-size:21px;line-height:1.12;font-weight:800;letter-spacing:-.035em;margin-top:16px}
+h1 em{font-style:normal;color:#f97316}
+.sub{font-size:10.5px;color:#a1a1aa;margin-top:8px;line-height:1.35;font-weight:500}
+.preco{margin-top:auto;font-size:11px;color:#fef3c7;font-weight:600}
+.preco b{font-size:19px;font-weight:800;color:#fafafa;letter-spacing:-.02em}
+.btn{margin-top:8px;background:#f97316;color:#121214;font-weight:800;font-size:12px;border-radius:9px;padding:8px 0;text-align:center;width:118px}
+/* celular */
+.phone{position:absolute;left:174px;top:24px;width:118px;height:250px;background:#0a0a0b;border:1px solid #3f3f46;border-radius:22px;padding:6px}
+.tela{background:#121214;border-radius:17px;height:100%;padding:14px 7px 0;display:flex;flex-direction:column;gap:6px;overflow:hidden}
+.card{background:#18181b;border:1px solid #27272a;border-radius:9px;padding:6px 7px}
+.label{font-size:5.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fef3c7}
+.saldo{font-size:12px;font-weight:800;letter-spacing:-.02em;margin-top:1px}
+.dois{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.dois .card{padding:5px;min-width:0}
+.dois .label{letter-spacing:.04em}
+.v{white-space:nowrap;font-size:7px;font-weight:800;margin-top:1px}
+.amber{color:#f59e0b}.orange{color:#f97316}
+.donut{display:flex;align-items:center;gap:7px;margin-top:3px}
+.leg{list-style:none;font-size:5.5px;white-space:nowrap;display:flex;flex-direction:column;gap:2px;color:#a1a1aa}
+.leg i{display:inline-block;width:5px;height:5px;border-radius:1px;margin-right:3px}
+.prog{height:4px;background:#27272a;border-radius:9px;margin-top:4px;overflow:hidden}
+.prog i{display:block;height:100%;width:68%;background:#f97316}
+</style>
+</head>
+<body>
+  <div class="txt">
+    <div class="marca"><span class="ico">F</span>Finance Balance</div>
+    <h1>Saiba para onde vai <em>cada real</em> do seu mês.</h1>
+    <p class="sub">Dashboard, orçamentos e metas na web e no Android.</p>
+    <p class="preco"><b class="num">R$ 29,90</b>/mês</p>
+    <div class="btn">Assinar agora</div>
+  </div>
+
+  <div class="phone">
+    <div class="tela">
+      <div class="card"><p class="label">Saldo total</p><p class="saldo num">R$ 8.432,90</p></div>
+      <div class="dois">
+        <div class="card"><p class="label">Receitas</p><p class="v num amber">R$ 4.850</p></div>
+        <div class="card"><p class="label">Despesas</p><p class="v num orange">R$ 3.127</p></div>
+      </div>
+      <div class="card">
+        <p class="label">Despesas por categoria</p>
+        <div class="donut">
+          <svg width="40" height="40" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#f97316" stroke-width="7" stroke-dasharray="38 62" stroke-dashoffset="25"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#f59e0b" stroke-width="7" stroke-dasharray="24 76" stroke-dashoffset="-13"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#fef3c7" stroke-width="7" stroke-dasharray="14 86" stroke-dashoffset="-37"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#fb923c" stroke-width="7" stroke-dasharray="12 88" stroke-dashoffset="-51"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#71717a" stroke-width="7" stroke-dasharray="12 88" stroke-dashoffset="-63"/>
+          </svg>
+          <ul class="leg">
+            <li><i style="background:#f97316"></i>Moradia</li>
+            <li><i style="background:#f59e0b"></i>Mercado</li>
+            <li><i style="background:#fef3c7"></i>Transporte</li>
+            <li><i style="background:#fb923c"></i>Lazer</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card"><p class="label">Orçamento do mês</p><p class="v num">68%</p><div class="prog"><i></i></div></div>
+    </div>
+  </div>
+  <div class="borda"></div>
+</body>
+</html>
