@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finance Balance — Seu dinheiro organizado no computador e no celular</title>
+<meta name="description" content="Gestor de finanças pessoais com dashboard, orçamentos, distribuição da renda e investimentos. Na web e no Android, por R$ 29,90/mês.">
+<meta property="og:title" content="Finance Balance — Seu dinheiro organizado">
+<meta property="og:description" content="Troque a planilha por um painel que mostra para onde vai cada real. R$ 29,90/mês.">
+<meta name="theme-color" content="#121214">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#121214;--surface:#18181b;--surface-2:#27272a;--line:#27272a;--line-strong:#3f3f46;
+  --fg:#fafafa;--muted:#a1a1aa;--subtle:#71717a;
+  --primary:#f97316;--primary-hover:#ea580c;--primary-soft:#fb923c;--on-primary:#121214;
+  --amber:#f59e0b;--amber-soft:#fbbf24;--cream:#fef3c7;--danger:#ffb4ab;
+  --r-md:.5rem;--r-lg:1rem;--r-xl:1.5rem;
+  --shadow:0 20px 25px -5px rgb(0 0 0/.6),0 8px 10px -6px rgb(0 0 0/.6);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{color-scheme:dark;scroll-behavior:smooth}
+body{background:var(--canvas);color:var(--fg);font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+.wrap{width:min(1160px,100% - 2rem);margin-inline:auto}
+.num{font-variant-numeric:tabular-nums lining-nums}
+.label{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cream)}
+h1,h2,h3{letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+p{text-wrap:pretty}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:6px}
+
+/* Botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:700;border-radius:var(--r-lg);padding:.9rem 1.5rem;transition:background .15s,transform .15s;white-space:nowrap}
+.btn-primary{background:var(--primary);color:var(--on-primary)}
+.btn-primary:hover{background:var(--primary-hover)}
+.btn-primary:active{transform:translateY(1px)}
+.btn-secondary{background:var(--surface-2);border:1px solid var(--line-strong);color:var(--cream)}
+.btn-secondary:hover{background:var(--line-strong)}
+.btn-sm{padding:.55rem 1rem;font-size:.9rem;border-radius:.75rem}
+
+/* Topo */
+.topo{position:sticky;top:0;z-index:50;background:rgb(18 18 20/.92);border-bottom:1px solid var(--line);backdrop-filter:saturate(1.2)}
+.topo .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.marca{display:flex;align-items:center;gap:.6rem;font-weight:800;font-size:1.1rem;letter-spacing:-.02em}
+.marca-ico{display:grid;place-items:center;width:32px;height:32px;border-radius:8px;background:var(--primary);color:var(--on-primary);font-weight:800}
+.topo nav{display:flex;gap:1.75rem;font-weight:600;font-size:.92rem;color:var(--muted)}
+.topo nav a:hover{color:var(--fg)}
+@media (max-width:820px){.topo nav{display:none}}
+
+/* Hero */
+.hero{padding:4.5rem 0 3rem;overflow:hidden}
+.hero-txt{max-width:760px;margin-inline:auto;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--amber);color:var(--amber);border-radius:999px;padding:.3rem .85rem;font-size:.8rem;font-weight:700;letter-spacing:.02em}
+.pill i{width:6px;height:6px;border-radius:50%;background:var(--amber)}
+.hero h1{font-size:clamp(2.25rem,5.4vw,3.9rem);font-weight:800;letter-spacing:-.035em;margin:1.25rem 0 1.1rem}
+.hero h1 em{font-style:normal;color:var(--primary)}
+.hero p.sub{font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--muted);max-width:620px;margin-inline:auto}
+.hero-cta{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-top:2rem}
+.hero-nota{margin-top:1rem;font-size:.85rem;color:var(--subtle)}
+
+/* Vitrine de dispositivos */
+.vitrine{position:relative;margin:3.5rem auto 0;max-width:1060px;padding-bottom:2rem}
+.laptop{width:84%;margin-left:0}
+.laptop-tela{background:#0a0a0b;border:1px solid var(--line-strong);border-radius:18px 18px 0 0;padding:10px 10px 0}
+.laptop-base{height:16px;background:var(--surface-2);border:1px solid var(--line-strong);border-top:0;border-radius:0 0 14px 14px;margin:0 -3%;position:relative}
+.laptop-base::after{content:"";position:absolute;left:50%;top:0;width:14%;height:6px;transform:translateX(-50%);background:var(--line-strong);border-radius:0 0 8px 8px}
+.phone-pos{position:absolute;right:0;bottom:-1.5rem;width:21%;min-width:150px}
+@media (max-width:700px){
+  .laptop{width:100%}
+  .phone-pos{position:relative;width:62%;max-width:280px;margin:-6% auto 0;right:auto;bottom:0}
+}
+
+/* Janela do navegador */
+.browser{border-radius:10px 10px 0 0;overflow:hidden;background:var(--canvas);container-type:inline-size}
+.browser-bar{display:flex;align-items:center;gap:1.2cqw;background:var(--surface);border-bottom:1px solid var(--line);padding:1cqw 1.4cqw}
+.browser-bar i{width:1cqw;height:1cqw;min-width:6px;min-height:6px;border-radius:50%;background:var(--line-strong)}
+.browser-url{flex:1;max-width:46%;margin-left:2cqw;background:var(--surface-2);border-radius:99px;font-size:max(1.05cqw,7px);color:var(--muted);padding:.4cqw 1.4cqw}
+
+/* App desktop (escala pelo container) */
+.app{display:grid;grid-template-columns:17% 1fr;font-size:1.15cqw;line-height:1.45;aspect-ratio:16/9.4;overflow:hidden}
+.app-side{background:var(--surface);border-right:1px solid var(--line);padding:1.4em 1em}
+.app-side .marca{font-size:1.15em;gap:.5em}
+.app-side .marca-ico{width:2em;height:2em;border-radius:.5em;font-size:.9em}
+.app-nav{margin-top:1.6em;display:flex;flex-direction:column;gap:.25em}
+.app-nav span{padding:.6em .8em;border-radius:.6em;color:var(--muted);font-weight:600;border-left:2px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-nav span.on{background:var(--surface-2);color:var(--primary);border-left-color:var(--primary)}
+.app-main{padding:1.6em 1.8em;display:flex;flex-direction:column;gap:1.1em;min-width:0}
+.app-head{display:flex;justify-content:space-between;align-items:flex-end}
+.app-head h4{font-size:1.75em;letter-spacing:-.02em}
+.app-head p{color:var(--muted);font-size:.9em}
+.mes{display:flex;align-items:center;gap:.8em;background:var(--surface);border:1px solid var(--line);border-radius:.7em;padding:.45em .9em;font-weight:600;font-size:.9em}
+.mes b{color:var(--muted);font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1em}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:1.1em;padding:1.1em 1.2em}
+.card .label{font-size:.68em}
+.kpi-v{font-weight:800;font-size:1.65em;letter-spacing:-.02em;margin-top:.2em}
+.kpi-s{color:var(--muted);font-size:.78em}
+.c-amber{color:var(--amber)}.c-primary{color:var(--primary)}
+.app-grid{display:grid;grid-template-columns:1fr 1fr;gap:1em;flex:1;min-height:0}
+.app-grid .card{display:flex;flex-direction:column}
+.app-grid .donut-row{flex:1}
+.app-grid .donut-row svg{max-height:13em;margin:auto}
+.card h5{font-size:1.05em;margin-bottom:.8em}
+.donut-row{display:grid;grid-template-columns:42% 1fr;gap:1em;align-items:center}
+.leg{list-style:none;display:flex;flex-direction:column;gap:.45em;font-size:.88em}
+.leg li{display:flex;justify-content:space-between;gap:.5em}
+.leg li span:first-child{display:flex;align-items:center;gap:.5em}
+.leg i{width:.75em;height:.75em;border-radius:.2em;display:inline-block}
+.leg .num{color:var(--muted)}
+.bars{display:flex;align-items:flex-end;gap:5%;flex:1;min-height:9em;border-bottom:1px solid var(--line);padding:0 2%}
+.bars div{flex:1;display:flex;align-items:flex-end;gap:10%;height:100%}
+.bars b{flex:1;border-radius:.25em .25em 0 0;display:block}
+.bars-x{display:flex;gap:5%;padding:0 2%;margin-top:.4em;color:var(--muted);font-size:.78em}
+.bars-x span{flex:1;text-align:center}
+
+/* Celular */
+.phone{background:#0a0a0b;border:1px solid var(--line-strong);border-radius:16% / 8%;padding:4.5%;box-shadow:var(--shadow)}
+.phone-screen{background:var(--canvas);border-radius:12% / 6%;overflow:hidden;container-type:inline-size;aspect-ratio:9/19}
+.m{font-size:4.6cqw;line-height:1.4;padding:9cqw 6cqw 6cqw;display:flex;flex-direction:column;gap:3.6cqw;height:100%}
+.m-status{display:flex;justify-content:space-between;font-size:.78em;color:var(--muted);font-weight:600;margin-top:-4cqw}
+.m-top{display:flex;justify-content:space-between;align-items:center}
+.m-top .marca{font-size:1em;gap:.45em}
+.m-top .marca-ico{width:1.7em;height:1.7em;border-radius:.45em;font-size:.85em}
+.m-av{width:1.9em;height:1.9em;border-radius:50%;background:var(--surface-2);border:1px solid var(--line-strong);display:grid;place-items:center;font-size:.75em;font-weight:700;color:var(--cream)}
+.m .card{border-radius:1em;padding:.95em 1em}
+.m-saldo{font-size:1.75em;font-weight:800;letter-spacing:-.02em}
+.m-dois{display:grid;grid-template-columns:1fr 1fr;gap:.6em}
+.m-dois .kpi-v{font-size:1.05em}
+.m-lista{list-style:none;display:flex;flex-direction:column;gap:.7em;font-size:.86em}
+.m-lista li{display:flex;justify-content:space-between;align-items:center;gap:.5em}
+.m-lista small{display:block;color:var(--muted);font-size:.85em}
+.prog{height:.5em;background:var(--surface-2);border-radius:99px;overflow:hidden;margin-top:.5em}
+.prog i{display:block;height:100%;background:var(--primary);border-radius:99px}
+.m-tab{margin-top:auto;display:flex;justify-content:space-around;border-top:1px solid var(--line);padding-top:.8em;font-size:.72em;color:var(--muted);font-weight:600}
+.m-tab .on{color:var(--primary)}
+.m-fab{position:relative}
+
+/* Seções */
+section.bloco{padding:5.5rem 0}
+.bloco-head{max-width:680px;margin-bottom:3rem}
+.bloco-head.centro{text-align:center;margin-inline:auto}
+.bloco-head h2{font-size:clamp(1.75rem,3.6vw,2.6rem);font-weight:800;margin:.6rem 0 .9rem}
+.bloco-head p{color:var(--muted);font-size:1.08rem}
+.borda-topo{border-top:1px solid var(--line)}
+
+/* Problema */
+.dores{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.dor{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);padding:1.75rem}
+.dor .x{font-size:.8rem;font-weight:700;color:var(--primary);letter-spacing:.06em;text-transform:uppercase}
+.dor h3{font-size:1.2rem;margin:.6rem 0 .5rem}
+.dor p{color:var(--muted);font-size:.97rem}
+@media (max-width:860px){.dores{grid-template-columns:1fr}}
+
+/* Duas versões */
+.versoes{display:grid;grid-template-columns:1.55fr 1fr;gap:1.5rem;align-items:stretch}
+.versao{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);padding:2rem;display:flex;flex-direction:column;gap:1.5rem}
+.versao h3{font-size:1.45rem}
+.versao p{color:var(--muted)}
+.check{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.check li{display:flex;gap:.7rem;align-items:flex-start;font-size:.97rem}
+.check li::before{content:"";flex:none;width:1.2rem;height:1.2rem;margin-top:.2rem;border-radius:.35rem;background:var(--primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' stroke='%23121214' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/80% no-repeat}
+.versao-mock{margin-top:auto}
+.versao-mock .browser{border:1px solid var(--line-strong);border-radius:12px}
+.versao-phone{width:min(200px,70%);margin:auto auto 0}
+@media (max-width:900px){.versoes{grid-template-columns:1fr}}
+
+/* Mock de orçamento e distribuição (desktop secundário) */
+.app2{font-size:1.5cqw;line-height:1.45;padding:2em;display:grid;grid-template-columns:1fr 1fr;gap:1.2em;background:var(--canvas)}
+.app2 h5{font-size:1.15em;margin-bottom:.9em}
+.orc{display:flex;flex-direction:column;gap:1em;font-size:.95em}
+.orc-l{display:flex;justify-content:space-between}
+.orc-l .num{color:var(--muted)}
+.dist{display:flex;flex-direction:column;gap:.75em;font-size:.95em}
+.dist-row{display:grid;grid-template-columns:1fr auto;gap:.2em .8em}
+.dist-row .prog{grid-column:1/-1;margin-top:.1em}
+
+/* Recursos */
+.recursos{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+.rec{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);padding:1.6rem}
+.rec-ico{width:44px;height:44px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line-strong);display:grid;place-items:center;color:var(--primary);margin-bottom:1.1rem}
+.rec h3{font-size:1.08rem;margin-bottom:.4rem}
+.rec p{color:var(--muted);font-size:.93rem}
+@media (max-width:1000px){.recursos{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.recursos{grid-template-columns:1fr}}
+
+/* Como funciona */
+.passos{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;counter-reset:p}
+.passo{border-top:2px solid var(--primary);padding-top:1.25rem}
+.passo::before{counter-increment:p;content:"0" counter(p);font-weight:800;color:var(--primary);font-size:.9rem;letter-spacing:.06em}
+.passo h3{font-size:1.2rem;margin:.5rem 0 .4rem}
+.passo p{color:var(--muted)}
+@media (max-width:800px){.passos{grid-template-columns:1fr}}
+
+/* Preço */
+.preco-box{display:grid;grid-template-columns:1.1fr 1fr;gap:0;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow)}
+.preco-esq{padding:2.75rem}
+.preco-dir{padding:2.75rem;background:var(--surface-2);border-left:1px solid var(--line-strong);display:flex;flex-direction:column;justify-content:center;gap:1rem}
+.preco-esq h3{font-size:1.6rem;margin:.4rem 0 .6rem}
+.preco-esq>p{color:var(--muted);margin-bottom:1.5rem}
+.valor{display:flex;align-items:flex-start;gap:.35rem;line-height:1}
+.valor small{font-size:1.25rem;font-weight:700;color:var(--cream);margin-top:.55rem}
+.valor strong{font-size:clamp(3.5rem,7vw,4.75rem);font-weight:800;letter-spacing:-.04em}
+.valor span{align-self:flex-end;color:var(--muted);font-weight:600;margin-bottom:.6rem}
+.preco-dir .btn{width:100%;font-size:1.05rem;padding:1.05rem}
+.garantias{list-style:none;display:flex;flex-direction:column;gap:.45rem;font-size:.9rem;color:var(--muted)}
+.garantias li::before{content:"— ";color:var(--amber)}
+.dia{display:inline-block;margin-top:.25rem;color:var(--amber);font-weight:700;font-size:.92rem}
+@media (max-width:860px){.preco-box{grid-template-columns:1fr}.preco-dir{border-left:0;border-top:1px solid var(--line-strong)}.preco-esq,.preco-dir{padding:1.75rem}}
+
+/* Comparativo */
+.comp{width:100%;border-collapse:collapse;font-size:.97rem}
+.comp th,.comp td{padding:1rem 1.1rem;text-align:left;border-bottom:1px solid var(--line)}
+.comp thead th{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cream)}
+.comp td:not(:first-child),.comp th:not(:first-child){text-align:center;width:22%}
+.comp td.sim{color:var(--primary);font-weight:700}
+.comp td.nao{color:var(--subtle)}
+.comp-wrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);overflow:auto}
+
+/* FAQ */
+.faq{max-width:780px;margin-inline:auto;display:flex;flex-direction:column;gap:.75rem}
+.faq details{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:1.1rem 1.4rem}
+.faq summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:1rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--primary);font-size:1.3rem;line-height:1;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{color:var(--muted);margin-top:.75rem}
+
+/* CTA final */
+.final{background:var(--primary);color:var(--on-primary);border-radius:var(--r-xl);padding:clamp(2rem,5vw,3.5rem);display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap}
+.final h2{font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:800;max-width:560px}
+.final p{font-weight:600;margin-top:.5rem;opacity:.85}
+.final .btn{background:var(--on-primary);color:var(--fg)}
+.final .btn:hover{background:#000}
+
+footer{border-top:1px solid var(--line);margin-top:5rem;padding:2rem 0;color:var(--subtle);font-size:.88rem}
+footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+/* Barra fixa de compra no celular */
+.barra-mobile{display:none}
+@media (max-width:700px){
+  .barra-mobile{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--surface);border-top:1px solid var(--line-strong);padding:.75rem 1rem;align-items:center;justify-content:space-between;gap:1rem;transform:translateY(100%);transition:transform .25s}
+  .barra-mobile.on{transform:none}
+  .barra-mobile b{font-size:1.1rem}
+  .barra-mobile small{display:block;color:var(--muted);font-size:.75rem}
+  body{padding-bottom:76px}
+  .hero{padding-top:3rem}
+  section.bloco{padding:4rem 0}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="wrap">
+    <a href="#" class="marca" aria-label="Finance Balance, início"><span class="marca-ico" aria-hidden="true">F</span>Finance Balance</a>
+    <nav aria-label="Seções">
+      <a href="#versoes">Web e celular</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#preco">Preço</a>
+      <a href="#faq">Dúvidas</a>
+    </nav>
+    <a href="#preco" class="btn btn-primary btn-sm js-checkout">Assinar</a>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-txt">
+      <span class="pill"><i></i> Web + app Android numa assinatura só</span>
+      <h1>Saiba para onde vai <em>cada real</em> do seu mês.</h1>
+      <p class="sub">O Finance Balance troca a planilha que você esquece de atualizar por um painel que mostra saldo, gastos por categoria, orçamento e investimentos. No computador e no celular.</p>
+      <div class="hero-cta">
+        <a href="#preco" class="btn btn-primary js-checkout">Assinar por R$ 29,90/mês</a>
+        <a href="#versoes" class="btn btn-secondary">Ver por dentro</a>
+      </div>
+      <p class="hero-nota">Sem fidelidade. Cancele quando quiser.</p>
+    </div>
+
+    <div class="vitrine" aria-label="O Finance Balance no notebook e no celular">
+      <div class="laptop">
+        <div class="laptop-tela">
+          <div class="browser">
+            <div class="browser-bar"><i></i><i></i><i></i><span class="browser-url">Finance Balance · Dashboard</span></div>
+            <div class="app" role="img" aria-label="Tela do dashboard na versão web: saldo total, receitas, despesas, gráfico de despesas por categoria e receitas versus despesas dos últimos seis meses">
+              <aside class="app-side">
+                <span class="marca"><span class="marca-ico">F</span>Finance Balance</span>
+                <div class="app-nav">
+                  <span class="on">Dashboard</span><span>Transações</span><span>Contas</span><span>Categorias</span><span>Orçamentos</span><span>Distribuição</span><span>Investimentos</span><span>Perfil</span>
+                </div>
+              </aside>
+              <div class="app-main">
+                <div class="app-head">
+                  <div><h4>Dashboard</h4><p>Resumo da sua situação financeira.</p></div>
+                  <div class="mes"><b>‹</b>Novembro 2026<b>›</b></div>
+                </div>
+                <div class="kpis">
+                  <div class="card"><p class="label">Saldo total</p><p class="kpi-v num">R$ 8.432,90</p><p class="kpi-s">Somatório das contas ativas</p></div>
+                  <div class="card"><p class="label">Receitas</p><p class="kpi-v num c-amber">R$ 4.850,00</p><p class="kpi-s">+ R$ 600,00 a receber</p></div>
+                  <div class="card"><p class="label">Despesas</p><p class="kpi-v num c-primary">R$ 3.127,45</p><p class="kpi-s">+ R$ 289,90 a pagar</p></div>
+                  <div class="card"><p class="label">Resultado</p><p class="kpi-v num">R$ 1.722,55</p><p class="kpi-s">Receitas − despesas pagas</p></div>
+                </div>
+                <div class="app-grid">
+                  <div class="card">
+                    <h5>Despesas por categoria</h5>
+                    <div class="donut-row">
+                      <svg viewBox="0 0 42 42" aria-hidden="true">
+                        <circle cx="21" cy="21" r="15.9" fill="none" stroke="#f97316" stroke-width="6" stroke-dasharray="38 62" stroke-dashoffset="25"/>
+                        <circle cx="21" cy="21" r="15.9" fill="none" stroke="#f59e0b" stroke-width="6" stroke-dasharray="24 76" stroke-dashoffset="-13"/>
+                        <circle cx="21" cy="21" r="15.9" fill="none" stroke="#fef3c7" stroke-width="6" stroke-dasharray="14 86" stroke-dashoffset="-37"/>
+                        <circle cx="21" cy="21" r="15.9" fill="none" stroke="#fb923c" stroke-width="6" stroke-dasharray="12 88" stroke-dashoffset="-51"/>
+                        <circle cx="21" cy="21" r="15.9" fill="none" stroke="#71717a" stroke-width="6" stroke-dasharray="12 88" stroke-dashoffset="-63"/>
+                      </svg>
+                      <ul class="leg">
+                        <li><span><i style="background:#f97316"></i>Moradia</span><span class="num">38%</span></li>
+                        <li><span><i style="background:#f59e0b"></i>Alimentação</span><span class="num">24%</span></li>
+                        <li><span><i style="background:#fef3c7"></i>Transporte</span><span class="num">14%</span></li>
+                        <li><span><i style="background:#fb923c"></i>Lazer</span><span class="num">12%</span></li>
+                        <li><span><i style="background:#71717a"></i>Outros</span><span class="num">12%</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <h5>Receitas x despesas (6 meses)</h5>
+                    <div class="bars" aria-hidden="true">
+                      <div><b style="height:78%;background:#f59e0b"></b><b style="height:66%;background:#f97316"></b></div>
+                      <div><b style="height:80%;background:#f59e0b"></b><b style="height:74%;background:#f97316"></b></div>
+                      <div><b style="height:79%;background:#f59e0b"></b><b style="height:58%;background:#f97316"></b></div>
+                      <div><b style="height:86%;background:#f59e0b"></b><b style="height:62%;background:#f97316"></b></div>
+                      <div><b style="height:84%;background:#f59e0b"></b><b style="height:55%;background:#f97316"></b></div>
+                      <div><b style="height:92%;background:#f59e0b"></b><b style="height:57%;background:#f97316"></b></div>
+                    </div>
+                    <div class="bars-x" aria-hidden="true"><span>jun</span><span>jul</span><span>ago</span><span>set</span><span>out</span><span>nov</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="laptop-base"></div>
+      </div>
+
+      <div class="phone-pos">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="m" role="img" aria-label="Tela inicial do app Android com saldo total, receitas, despesas, últimos lançamentos e progresso do orçamento">
+              <div class="m-status"><span>9:41</span><span>5G ▪▪▪</span></div>
+              <div class="m-top"><span class="marca"><span class="marca-ico">F</span>Início</span><span class="m-av">DH</span></div>
+              <div class="card"><p class="label">Saldo total</p><p class="m-saldo num">R$ 8.432,90</p></div>
+              <div class="m-dois">
+                <div class="card"><p class="label">Receitas</p><p class="kpi-v num c-amber">R$ 4.850</p></div>
+                <div class="card"><p class="label">Despesas</p><p class="kpi-v num c-primary">R$ 3.127</p></div>
+              </div>
+              <div class="card">
+                <p class="label">Orçamento do mês</p>
+                <p style="font-weight:800;font-size:1.3em" class="num">68%</p>
+                <div class="prog"><i style="width:68%"></i></div>
+              </div>
+              <div class="card">
+                <ul class="m-lista">
+                  <li><span>Aluguel<small>05/11 · Moradia</small></span><b class="num c-primary">−1.200,00</b></li>
+                  <li><span>Salário<small>05/11 · Renda</small></span><b class="num c-amber">+4.250,00</b></li>
+                  <li><span>Mercado<small>18/11 · Alimentação</small></span><b class="num c-primary">−412,35</b></li>
+                </ul>
+              </div>
+              <div class="m-tab"><span class="on">Início</span><span>Lançar</span><span>Metas</span><span>Perfil</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="bloco borda-topo">
+  <div class="wrap">
+    <div class="bloco-head">
+      <span class="label">O problema</span>
+      <h2>A planilha funciona até o dia em que você para de atualizar.</h2>
+      <p>E aí o mês termina, o dinheiro também, e ninguém sabe direito o que aconteceu no meio.</p>
+    </div>
+    <div class="dores">
+      <div class="dor"><span class="x">Sem clareza</span><h3>"Quanto eu tenho de verdade?"</h3><p>Saldo espalhado em conta, carteira digital e investimento. Somar tudo vira tarefa de domingo.</p></div>
+      <div class="dor"><span class="x">Sem visão</span><h3>"Onde foi parar o salário?"</h3><p>Sem categorias, os pequenos gastos somem no extrato e só aparecem quando a fatura chega.</p></div>
+      <div class="dor"><span class="x">Sem plano</span><h3>"Quanto posso gastar ainda?"</h3><p>Sem limite por categoria, não dá para saber se cabe aquele gasto antes de fazer.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DUAS VERSÕES -->
+<section class="bloco borda-topo" id="versoes">
+  <div class="wrap">
+    <div class="bloco-head">
+      <span class="label">Uma conta, dois lugares</span>
+      <h2>Planeje no computador. Lance no celular.</h2>
+      <p>Os mesmos dados nas duas versões. O que você registra no ônibus já está no painel quando você abre o notebook.</p>
+    </div>
+    <div class="versoes">
+      <article class="versao">
+        <div>
+          <span class="label">Versão desktop · navegador</span>
+          <h3 style="margin:.4rem 0 .5rem">O painel completo para planejar o mês</h3>
+          <p>Tela grande para ver tudo de uma vez: orçamentos, distribuição da renda, investimentos e filtros detalhados.</p>
+        </div>
+        <ul class="check">
+          <li>Dashboard com gráficos de categoria e de 6 meses</li>
+          <li>Orçamento por categoria com alerta de consumo</li>
+          <li>Distribuição da renda por percentual (ex.: 50/30/20)</li>
+          <li>Busca e filtros por período, conta, categoria e etiqueta</li>
+          <li>Exportação em CSV para o contador ou para o Excel</li>
+        </ul>
+        <div class="versao-mock">
+          <div class="browser">
+            <div class="browser-bar"><i></i><i></i><i></i><span class="browser-url">Finance Balance · Orçamentos</span></div>
+            <div class="app2" role="img" aria-label="Telas de orçamento por categoria e distribuição percentual da renda na versão web">
+              <div class="card">
+                <h5>Orçamento de novembro</h5>
+                <div class="orc">
+                  <div><div class="orc-l"><span>Alimentação</span><span class="num">R$ 750 / 900</span></div><div class="prog"><i style="width:83%"></i></div></div>
+                  <div><div class="orc-l"><span>Transporte</span><span class="num">R$ 438 / 500</span></div><div class="prog"><i style="width:88%;background:#ea580c"></i></div></div>
+                  <div><div class="orc-l"><span>Lazer</span><span class="num">R$ 375 / 600</span></div><div class="prog"><i style="width:62%"></i></div></div>
+                  <div><div class="orc-l"><span>Assinaturas</span><span class="num">R$ 89 / 150</span></div><div class="prog"><i style="width:59%"></i></div></div>
+                </div>
+              </div>
+              <div class="card">
+                <h5>Distribuição da renda</h5>
+                <div class="dist">
+                  <div class="dist-row"><span>Essenciais · 50%</span><span class="num">R$ 2.425</span><div class="prog"><i style="width:50%;background:#f97316"></i></div></div>
+                  <div class="dist-row"><span>Estilo de vida · 30%</span><span class="num">R$ 1.455</span><div class="prog"><i style="width:30%;background:#f59e0b"></i></div></div>
+                  <div class="dist-row"><span>Investimentos · 20%</span><span class="num">R$ 970</span><div class="prog"><i style="width:20%;background:#fef3c7"></i></div></div>
+                  <p class="kpi-s" style="margin-top:.2em">Base: renda de R$ 4.850,00 · soma 100%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="versao">
+        <div>
+          <span class="label">Versão mobile · Android</span>
+          <h3 style="margin:.4rem 0 .5rem">O app para registrar na hora</h3>
+          <p>Gastou? Lança ali mesmo, antes de esquecer. E acompanha suas metas de onde estiver.</p>
+        </div>
+        <ul class="check">
+          <li>Resumo do mês na tela inicial</li>
+          <li>Lançamento rápido de receitas e despesas</li>
+          <li>Metas financeiras com progresso</li>
+        </ul>
+        <div class="versao-phone">
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="m" role="img" aria-label="Tela de metas financeiras no app Android">
+                <div class="m-status"><span>9:41</span><span>5G ▪▪▪</span></div>
+                <div class="m-top"><span class="marca"><span class="marca-ico">F</span>Metas</span><span class="m-av">+</span></div>
+                <div class="card">
+                  <p class="label">Reserva de emergência</p>
+                  <p style="font-weight:800;font-size:1.25em" class="num">R$ 6.300 <span style="color:var(--muted);font-weight:600;font-size:.7em">de 10.000</span></p>
+                  <div class="prog"><i style="width:63%;background:#f59e0b"></i></div>
+                </div>
+                <div class="card">
+                  <p class="label">Viagem de férias</p>
+                  <p style="font-weight:800;font-size:1.25em" class="num">R$ 1.840 <span style="color:var(--muted);font-weight:600;font-size:.7em">de 4.000</span></p>
+                  <div class="prog"><i style="width:46%"></i></div>
+                </div>
+                <div class="card">
+                  <p class="label">Notebook novo</p>
+                  <p style="font-weight:800;font-size:1.25em" class="num">R$ 2.900 <span style="color:var(--muted);font-weight:600;font-size:.7em">de 3.500</span></p>
+                  <div class="prog"><i style="width:83%;background:#fef3c7"></i></div>
+                </div>
+                <div class="m-tab"><span>Início</span><span>Lançar</span><span class="on">Metas</span><span>Perfil</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- RECURSOS -->
+<section class="bloco borda-topo" id="recursos">
+  <div class="wrap">
+    <div class="bloco-head">
+      <span class="label">Tudo o que vem na assinatura</span>
+      <h2>Um sistema financeiro de verdade, sem complicação de banco.</h2>
+      <p>Você registra, o Finance Balance organiza e calcula. Seus dados não dependem de conectar conta bancária para funcionar.</p>
+    </div>
+    <div class="recursos">
+      <div class="rec"><div class="rec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></div><h3>Dashboard</h3><p>Saldo, receitas, despesas, resultado do mês e os maiores gastos numa tela só.</p></div>
+      <div class="rec"><div class="rec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div><h3>Várias contas</h3><p>Conta corrente, poupança, carteira e dinheiro vivo, cada uma com seu saldo.</p></div>
+      <div class="rec"><div class="rec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10M7 12h10M7 17h6"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg></div><h3>Transações</h3><p>Receitas, despesas e transferências, com status pago ou pendente e forma de pagamento.</p></div>
+      <div class="rec"><div class="rec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4l-7.2 7.2a2 2 0 01-2.8 0L3 13V3h10l7.6 7.6a2 2 0 010 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></div><h3>Categorias e etiquetas</h3><p>Categorias e subcategorias prontas para editar, mais etiquetas livres como #viagem.</p></div>
+      <div class="rec"><div class="rec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Orçamentos</h3><p>Limite por categoria e barra de consumo para saber quanto ainda cabe no mês.</p></div>
+      <div class="rec"><div class="rec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12A9 9 0 113 12a9 9 0 0118 0z"/><path d="M12 3v9l6.4 6.4"/></svg></div><h3>Distribuição da renda</h3><p>Defina percentuais e veja em reais quanto vai para cada parte. Compare o planejado com o realizado.</p></div>
+      <div class="rec"><div class="rec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div><h3>Investimentos</h3><p>Registre aportes e acompanhe o total investido junto com o resto das finanças.</p></div>
+      <div class="rec"><div class="rec-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 19h16"/></svg></div><h3>Exportação CSV</h3><p>Leve seus dados para onde quiser. Eles são seus.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="bloco borda-topo">
+  <div class="wrap">
+    <div class="bloco-head">
+      <span class="label">Como funciona</span>
+      <h2>Organizado em uma tarde.</h2>
+    </div>
+    <div class="passos">
+      <div class="passo"><h3>Assine e crie sua conta</h3><p>R$ 29,90 por mês. Acesse pelo navegador e instale o app no Android com o mesmo login.</p></div>
+      <div class="passo"><h3>Cadastre contas e o mês atual</h3><p>Informe o saldo de cada conta e lance as receitas e despesas do mês. As categorias já vêm prontas.</p></div>
+      <div class="passo"><h3>Defina limites e acompanhe</h3><p>Crie orçamentos e a distribuição da sua renda. O dashboard mostra se você está dentro do plano.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PREÇO -->
+<section class="bloco borda-topo" id="preco">
+  <div class="wrap">
+    <div class="bloco-head centro">
+      <span class="label">Assinatura</span>
+      <h2>Um plano. Tudo incluso.</h2>
+      <p>Sem plano básico cheio de bloqueio. Você assina e usa tudo, na web e no celular.</p>
+    </div>
+    <div class="preco-box">
+      <div class="preco-esq">
+        <span class="pill"><i></i> Plano mensal</span>
+        <h3>Finance Balance Completo</h3>
+        <p>Acesso a todos os recursos nas duas versões.</p>
+        <ul class="check">
+          <li>Versão web completa (desktop e tablet)</li>
+          <li>App Android com o mesmo login</li>
+          <li>Contas, transações e categorias ilimitadas</li>
+          <li>Orçamentos e distribuição da renda</li>
+          <li>Registro de investimentos e metas</li>
+          <li>Exportação dos seus dados em CSV</li>
+          <li>Novos recursos sem custo extra</li>
+        </ul>
+      </div>
+      <div class="preco-dir">
+        <div class="valor"><small>R$</small><strong class="num">29,90</strong><span>/mês</span></div>
+        <span class="dia">Menos de R$ 1 por dia.</span>
+        <a href="#" class="btn btn-primary js-checkout" data-final>Quero assinar agora</a>
+        <ul class="garantias">
+          <li>Cobrança mensal recorrente</li>
+          <li>Sem fidelidade: cancele quando quiser</li>
+          <li>Pagamento seguro</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIVO -->
+<section class="bloco borda-topo">
+  <div class="wrap">
+    <div class="bloco-head">
+      <span class="label">Por que não só a planilha?</span>
+      <h2>O que muda na prática.</h2>
+    </div>
+    <div class="comp-wrap">
+      <table class="comp">
+        <thead><tr><th scope="col">Recurso</th><th scope="col">Planilha</th><th scope="col">Finance Balance</th></tr></thead>
+        <tbody>
+          <tr><td>Gráficos prontos, sem fórmula</td><td class="nao">Montar na mão</td><td class="sim">✓</td></tr>
+          <tr><td>Lançar pelo celular em segundos</td><td class="nao">Difícil</td><td class="sim">✓</td></tr>
+          <tr><td>Orçamento por categoria com alerta</td><td class="nao">—</td><td class="sim">✓</td></tr>
+          <tr><td>Distribuição da renda calculada</td><td class="nao">Fórmula manual</td><td class="sim">✓</td></tr>
+          <tr><td>Pago x pendente separado no saldo</td><td class="nao">—</td><td class="sim">✓</td></tr>
+          <tr><td>Exportar tudo em CSV</td><td class="sim">✓</td><td class="sim">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="bloco borda-topo" id="faq">
+  <div class="wrap">
+    <div class="bloco-head centro"><span class="label">Dúvidas</span><h2>Perguntas frequentes</h2></div>
+    <div class="faq">
+      <details><summary>Como funciona a cobrança?</summary><p>É uma assinatura mensal de R$ 29,90, cobrada automaticamente todo mês na mesma data. Você mantém o acesso enquanto a assinatura estiver ativa.</p></details>
+      <details><summary>Posso cancelar quando quiser?</summary><p>Sim. Não tem fidelidade nem multa. Ao cancelar, você usa até o fim do período já pago e não é cobrado de novo.</p></details>
+      <details><summary>Preciso conectar minha conta do banco?</summary><p>Não. O Finance Balance funciona com os lançamentos que você faz, sem pedir senha de banco. Você decide o que entra no sistema.</p></details>
+      <details><summary>Funciona no iPhone?</summary><p>No iPhone, use a versão web pelo navegador (Safari ou Chrome), que se adapta à tela. O app nativo está disponível para Android.</p></details>
+      <details><summary>Meus dados ficam seguros?</summary><p>Cada usuário só acessa os próprios dados, e o acesso é protegido por login com senha. Você pode exportar tudo em CSV quando quiser.</p></details>
+      <details><summary>Já uso planilha. Consigo migrar?</summary><p>Sim. Comece cadastrando o saldo atual de cada conta e os lançamentos do mês. Em uma tarde o painel já está mostrando seus números.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="bloco" style="padding-top:1rem">
+  <div class="wrap">
+    <div class="final">
+      <div>
+        <h2>Comece o próximo mês sabendo exatamente para onde vai o seu dinheiro.</h2>
+        <p>R$ 29,90/mês · web + Android · cancele quando quiser</p>
+      </div>
+      <a href="#preco" class="btn js-checkout">Assinar o Finance Balance</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="marca" style="color:var(--fg)"><span class="marca-ico" aria-hidden="true">F</span>Finance Balance</span>
+    <span>© 2026 Finance Balance. Todos os direitos reservados.</span>
+  </div>
+</footer>
+
+<div class="barra-mobile" id="barra">
+  <div><b class="num">R$ 29,90<span style="font-size:.8rem;color:var(--muted);font-weight:600">/mês</span></b><small>Web + Android · sem fidelidade</small></div>
+  <a href="#preco" class="btn btn-primary btn-sm js-checkout">Assinar</a>
+</div>
+
+<script>
+  // Cole aqui o link de checkout da assinatura (Stripe, Kiwify, Hotmart, Mercado Pago...).
+  // Enquanto estiver vazio, os botões levam até a seção de preço.
+  const CHECKOUT_URL = '';
+
+  document.querySelectorAll('.js-checkout').forEach((a) => {
+    if (CHECKOUT_URL) { a.href = CHECKOUT_URL; a.rel = 'noopener'; }
+    else if (a.hasAttribute('data-final')) a.href = '#preco';
+  });
+
+  // Barra fixa de compra no celular: aparece depois do hero e some na seção de preço.
+  const barra = document.getElementById('barra');
+  const hero = document.querySelector('.hero');
+  const preco = document.getElementById('preco');
+  let passouHero = false, vendoPreco = false;
+  const atualizar = () => barra.classList.toggle('on', passouHero && !vendoPreco);
+  new IntersectionObserver(([e]) => { passouHero = !e.isIntersecting; atualizar(); }).observe(hero);
+  new IntersectionObserver(([e]) => { vendoPreco = e.isIntersecting; atualizar(); }).observe(preco);
+</script>
+</body>
+</html>
